@@ -76,4 +76,4 @@ Could continued training to 800K have lifted Big v2 above Base v2? The training-
 \textbf{Filter first, scale second.} The v1$\rightarrow$v2 corpus expansion sees both models lose, with the larger model losing more. The v1.1 capacity gap ($+0.56$) only emerges when the data is clean. Spending extra capacity on noisy data is strictly counterproductive at this scale.
 \end{quote}
 
-\S\ref{sec:ende} replicates the qualitative pattern at smaller scale (4.5M pairs, en-de). \S\ref{sec:sft} then asks whether v2's noise can be filtered after the fact via QE-based SFT --- a natural follow-up that produces a different kind of failure.
+\S\ref{sec:ende} replicates the pattern at smaller scale (4.5M pairs, en-de). \S\ref{sec:sft} then asks whether v2's noise can be filtered after the fact via QE-filtered fine-tuning --- a natural follow-up that produces a different kind of failure.

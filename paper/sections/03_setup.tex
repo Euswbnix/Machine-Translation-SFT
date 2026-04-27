@@ -42,7 +42,7 @@ We use the original Vaswani configurations. Base ($d_\text{model}{=}512$, $h{=}8
 
 \paragraph{Checkpoint averaging.} The classic Vaswani trick: average the parameters of the last 5 checkpoints (5K-step intervals near convergence) before evaluation. This consistently lifts BLEU by 0.3--0.5. All headline numbers in the paper are post-averaging unless stated.
 
-\paragraph{Single-checkpoint comparison.} For SFT, where the run is too short to produce 5 save-interval-spaced checkpoints, we evaluate the final single checkpoint. We flag this unit-mismatch in Table~\ref{tab:sft_results} and note that it inflates the apparent SFT degradation by approximately the averaging gain (0.3--0.5 BLEU).
+\paragraph{Single-checkpoint comparison.} For fine-tuning runs (\S\ref{sec:sft}), where the run is too short to produce 5 save-interval-spaced checkpoints, we evaluate the final single checkpoint. We flag this unit-mismatch in Table~\ref{tab:sft_results} and note that it inflates the apparent fine-tuning degradation by approximately the averaging gain (0.3--0.5 BLEU).
 
 \subsection{Compute budget}
-The full study --- five headline pretraining runs (en-fr Base v1.1, Big v1.1, Base v2, Big v2; en-de Base) plus two SFT runs plus 13.8~h of CometKiwi scoring --- totals $\sim$~30 GPU-hours on the 5090.
+The full study --- five headline pretraining runs (en-fr Base v1.1, Big v1.1, Base v2, Big v2; en-de Base) plus two fine-tuning runs plus 13.8~h of CometKiwi scoring --- totals $\sim$~30 GPU-hours on the 5090.
