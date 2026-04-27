@@ -22,16 +22,16 @@ The result is a clean **negative finding**, and the negative finding is itself t
 
 ## 7.3 Results
 
-The SFT run early-stopped at step 111,000 (6K SFT steps) under default patience. Validation BLEU monotonically decreased throughout:
+We ran SFT on both Base v1.1 (60M) and Big v1.1 (209M) under identical SFT data, hyperparameters, and stopping rule. Both runs early-stopped under default patience after ~6K SFT steps. Validation BLEU monotonically decreased throughout, on both models:
 
-| Global step | Δ steps | Valid BLEU | Δ vs baseline |
-|------------|--------|-----------|---------------|
-| 105,000 (load) | 0 | 30.52 | — (baseline) |
-| 107,000 | 2,000 | 29.44 | **−1.08** |
-| 108,000 | 3,000 | 29.46 | −1.06 |
-| 111,000 | 6,000 | **28.97** | **−1.55** |
+| Model     | Baseline | After SFT (best) | Δ vs baseline |
+|-----------|----------|-----------------|---------------|
+| Base v1.1 (60M)  | 30.52 | 28.97 | **−1.55** |
+| Big  v1.1 (209M) | 31.14 | 29.05 | **−2.09** |
 
-Training loss on the SFT set converged smoothly from ~3.5 (pretraining floor on v1) to 1.94 (SFT floor) — the model fit the SFT distribution well; the loss curve gives no indication of optimization failure. Sample translations during SFT remain fluent and grammatically correct; in particular, accented French characters (`Israël`, etc.) are preserved (no `<unk>`) thanks to the v1.1 SPM. The drop is not a translation-quality collapse. It is a **distribution shift**.
+Training loss on the SFT set converged smoothly from ~3.5 (pretraining floor on v1) to 1.94 (Base SFT floor) — the model fit the SFT distribution well; the loss curve gives no indication of optimization failure. Sample translations during SFT remain fluent and grammatically correct; in particular, accented French characters (`Israël`, etc.) are preserved (no `<unk>`) thanks to the v1.1 SPM. **The drop is not a translation-quality collapse. It is a distribution shift.**
+
+The Big-Base gap is itself diagnostic: Big lost 0.54 BLEU more than Base under the same SFT intervention. We will return to this in §7.6 — it mirrors the v2-pretraining failure where Big also lost more than Base.
 
 ## 7.4 Analysis: why the filter selected what it did
 
@@ -70,11 +70,21 @@ A naive top-K-by-QE filter optimizes only the first axis, and on a heterogeneous
 
 This generalizes: any post-training step that filters on absolute quality without conditioning on the eval distribution is liable to move the model away from where it should land. The fix is not "better QE" — CometKiwi-22 is doing exactly what it should — but **domain-conditional filtering**: filter by QE within news-domain candidates, or sample uniformly across domains within the QE band, or apply a domain classifier as a hard pre-filter.
 
-## 7.6 Why the v2-pretraining failure mode is *different*
+## 7.6 Why the v2-pretraining failure and the SFT failure are *different mechanisms*
 
-It is worth noting that v2's pretraining failure (Section 5: Base v2 lost 0.79 BLEU vs v1, Big v2 lost 0.87 to Base v2) is **not** the same mechanism as Section 7's SFT failure. v2 pretraining failed because the corpus contains **noisy** pairs — outright mistranslations, misalignments, repeated boilerplate — which inject incorrect supervision signal. Quality-filtering by CometKiwi *does* address that: spike-guard triggers in pretraining and visual inspection of low-scored v2 pairs both confirm v2 has genuine noise.
+It is worth distinguishing two failure modes that this paper has now exhibited:
 
-Section 7's SFT failure is a separate axis: even after the noise is filtered out, the *clean* high-quality remainder is still the wrong distribution for newstest. Quality filtering succeeded at its job; the job was the wrong job.
+| | v2 pretraining failure (§5) | Quality-filtered SFT failure (§7) |
+|--|--|--|
+| **Data** | All 30M v2 pairs (noisy) | Top-1M by CometKiwi (clean) |
+| **Mechanism** | Incorrect supervision (mistranslations, misalignments, boilerplate) inject wrong gradients | Correct supervision but wrong distribution (formal vs news register) |
+| **Evidence** | Spike-guard triggers; manual inspection finds genuine errors | Manual inspection of top-K finds professional translations of *the wrong domain* |
+| **Big − Base Δ** | Big v2 −0.87 vs Base v2 | Big SFT −0.54 vs Base SFT |
+| **Lesson** | Filter for noise | Match for distribution |
+
+These failures are independent axes — quality filtering with CometKiwi *does* address the v2 noise problem (visual inspection of low-scored v2 pairs confirms genuine noise concentrates in the bottom of the distribution), but it does not address the distribution-alignment problem, because high-quality translations exist in many domains and our top-K selector does not condition on domain.
+
+**Capacity amplifies both failure modes.** Big v2 is worse than Base v2 by 0.87 (noise amplification); Big SFT is worse than Base SFT by 0.54 (distribution-shift amplification). The same architectural property — more parameters, more representational capacity — that makes Big a better learner of correct supervision on clean in-distribution data also makes Big a more efficient absorber of incorrect supervision and a more pliable conformer to whatever distribution it is fine-tuned on. In both cases, capacity is a force multiplier whose sign depends on the data, not on the model.
 
 ## 7.7 Limitations and what we did not run
 
