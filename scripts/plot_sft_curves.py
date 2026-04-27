@@ -49,7 +49,7 @@ def main():
         ax.plot(
             run["sft_steps_K"], run["sft_bleu"],
             marker="o", color=run["color"],
-            label=f"{run['name']} + SFT",
+            label=f"{run['name']} + fine-tuning",
             linewidth=2, markersize=7,
         )
         # Baseline (averaged-ckpt valid BLEU) as horizontal dashed line
@@ -71,9 +71,9 @@ def main():
             color=run["color"], fontsize=9, fontweight="bold",
         )
 
-    ax.set_xlabel("SFT steps elapsed (×1000)")
+    ax.set_xlabel("Fine-tuning steps elapsed (×1000)")
     ax.set_ylabel("Valid BLEU (newstest2013, sacrebleu 13a)")
-    ax.set_title("Quality-filtered SFT degrades both Base and Big v1.1\n"
+    ax.set_title("QE-filtered fine-tuning degrades both Base and Big v1.1\n"
                  "(top-1M of v2 by CometKiwi-22; same SPM, same eval, "
                  "fresh optimizer)")
     ax.set_xticks(range(0, 8))
