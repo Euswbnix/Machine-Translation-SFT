@@ -1,7 +1,7 @@
 \section{Failure Case: en-fr on the Loose-Filter v2 Corpus}
 \label{sec:enfr_v2}
 
-This section reports the failure side of the 2$\times$2 ablation. Base v2 and Big v2 share the pipeline, SPM, eval, and hyperparameters of their v1.1 counterparts; only the training corpus changes (v1's 9.3M strict-filter $\rightarrow$ v2's 30M loose-filter, drawn from the same WMT14 source pool). Both v2 runs converge cleanly. \emph{Both land below their v1 counterparts}, and \emph{Big v2 lands below Base v2} on identical data. The 2$\times$2 closes here.
+This section reports the failure side of the 2x2 ablation. Base v2 and Big v2 share the pipeline, SPM, eval, and hyperparameters of their v1.1 counterparts; only the training corpus changes (v1's 9.3M strict-filter $\rightarrow$ v2's 30M loose-filter, drawn from the same WMT14 source pool). Both v2 runs converge cleanly. \emph{Both land below their v1 counterparts}, and \emph{Big v2 lands below Base v2} on identical data. The 2x2 closes here.
 
 \subsection{Corpus construction}
 v2 starts from the same WMT14 en-fr raw $\sim$~40.8M, cleaned with the same per-pair filters as v1, but \emph{without} the 10M-head cap. 30.1M pairs survive (74\% keep rate, vs.\ v1's 93\% on the head 10M). The 19-point keep-rate gap quantifies how much noisier the long tail is once the cap is removed.
@@ -27,7 +27,7 @@ Trained from scratch for 800K planned steps; halted at 416K once valid BLEU plat
 
 This sits \textbf{below Base v2} on both splits: $-0.32$ valid, $-0.87$ test. The same $3.5\times$ extra parameters that paid $+0.56$ on v1 (\S\ref{sec:v1_capacity}) cost $-0.87$ here. The capacity gap has flipped sign.
 
-\subsection{The 2$\times$2 result}
+\subsection{The 2x2 result}
 \label{sec:two_by_two}
 
 \begin{table}[t]
@@ -43,7 +43,7 @@ v2 (30M loose)     & \textbf{33.90} & 33.03 & $\mathbf{-0.87}$ \\
 \textbf{Quality drop} & $-1.41$ & $-2.84$ & --- \\
 \bottomrule
 \end{tabular}
-\caption{The 2$\times$2 result: test BLEU on newstest2014; sacrebleu 13a, beam=5, length-penalty=1.0, 5-checkpoint averaged. Bold marks the better model within each row (capacity gap) and column (data-quality gap). The Big$-$Base difference flips sign: $+0.56$ on clean data, $-0.87$ on noisy data. Equivalently, the v1$\rightarrow$v2 quality drop is twice as large for Big ($-2.84$) as for Base ($-1.41$).}
+\caption{The 2x2 result: test BLEU on newstest2014; sacrebleu 13a, beam=5, length-penalty=1.0, 5-checkpoint averaged. Bold marks the better model within each row (capacity gap) and column (data-quality gap). The Big$-$Base difference flips sign: $+0.56$ on clean data, $-0.87$ on noisy data. Equivalently, the v1$\rightarrow$v2 quality drop is twice as large for Big ($-2.84$) as for Base ($-1.41$).}
 \label{tab:two_by_two}
 \end{table}
 

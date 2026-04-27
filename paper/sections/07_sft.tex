@@ -2,7 +2,7 @@
 \label{sec:sft}
 
 \subsection{Motivation}
-\S\S\ref{sec:enfr_v1}--\ref{sec:ende} establish a controlled 2$\times$2: \textbf{data quality determines the sign of the capacity return}. On the strict-filter v1.1 corpus (9.3M pairs), Big exceeds Base by $+0.56$ BLEU; on the loose-filter v2 corpus (30M pairs), Big falls below Base by $-0.87$. The natural follow-up question is whether v2's extra 20M pairs are \emph{recoverable}: can we extract the high-quality subset of v2 and use it to push past v1.1's plateau?
+\S\S\ref{sec:enfr_v1}--\ref{sec:ende} establish a controlled 2x2: \textbf{data quality determines the sign of the capacity return}. On the strict-filter v1.1 corpus (9.3M pairs), Big exceeds Base by $+0.56$ BLEU; on the loose-filter v2 corpus (30M pairs), Big falls below Base by $-0.87$. The natural follow-up question is whether v2's extra 20M pairs are \emph{recoverable}: can we extract the high-quality subset of v2 and use it to push past v1.1's plateau?
 
 This section tests that hypothesis with \emph{QE-filtered fine-tuning}: we score the full v2 corpus with a reference-free quality-estimation (QE) model, take the top-1M pairs by score, deduplicate, and continue training Base v1.1 and Big v1.1 on this filtered subset under the same cross-entropy loss as pretraining. \textbf{This is not instruction or preference tuning.}\footnote{We use ``fine-tuning'' (FT) in this section to denote continued pretraining-style training on a curated parallel-corpus subset. We avoid ``SFT'' alone because in the LLM literature it now most commonly refers to instruction tuning on (prompt, response) pairs, which is not the procedure here.} The intent is to retain whatever signal v2 contributes beyond v1's strict cutoffs while discarding the noise.
 
@@ -95,7 +95,7 @@ Capacity return is determined by data quality. \emph{(\S\ref{sec:enfr_v1}--\S\re
 \end{quote}
 \S\ref{sec:sft} forces a decomposition of ``quality'':
 \begin{quote}
-\textbf{Data quality $=$ (translation correctness) $\times$ (alignment to target distribution).}
+\textbf{Data quality = (translation correctness) x (alignment to target distribution).}
 Both dimensions matter, and they are independent. Reference-free QE metrics measure the first; they do not measure the second.
 \end{quote}
 

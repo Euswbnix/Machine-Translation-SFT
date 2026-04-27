@@ -1,7 +1,7 @@
 \section{Cross-Language Replication: WMT14 en-de}
 \label{sec:ende}
 
-This section asks whether the en-fr 2$\times$2 pattern generalizes to a different language pair. We pick WMT14 en-de --- a $4.5\times$ smaller raw corpus than en-fr (4.5M vs.\ 40.8M), where the raw data is already cleaner per-pair. The corpus is small enough that no clean v1/v2 split is possible (there is no ``loose'' option that yields meaningfully more data); instead we train a single Base and a single Big on the standard cleaned corpus and inspect the Base/Big gap.
+This section asks whether the en-fr 2x2 pattern generalizes to a different language pair. We pick WMT14 en-de --- a $4.5\times$ smaller raw corpus than en-fr (4.5M vs.\ 40.8M), where the raw data is already cleaner per-pair. The corpus is small enough that no clean v1/v2 split is possible (there is no ``loose'' option that yields meaningfully more data); instead we train a single Base and a single Big on the standard cleaned corpus and inspect the Base/Big gap.
 
 \subsection{Corpus and setup}
 WMT14 en-de is downloaded via HuggingFace Datasets (4{,}509{,}489 raw pairs) and cleaned with the v1 thresholds; 4{,}174{,}104 pairs survive (92.6\% keep rate). SPM 32K joint vocabulary, \texttt{character\_coverage=1.0} (preserves German umlauts). Train/valid/test $=$ 4.17M / 3{,}000 / 3{,}003.

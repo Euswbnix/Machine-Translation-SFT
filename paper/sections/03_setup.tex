@@ -12,7 +12,7 @@ All training runs use a single NVIDIA RTX 5090 (Blackwell, sm\_120, 32~GB VRAM, 
 \item \textbf{v1 (strict, 9.3M).} The raw corpus is capped at 10M pairs (the first 10M from the HuggingFace Datasets stream, deterministic order), then cleaned with: empty/duplicate removal, length range [3, 200] tokens, src/tgt length ratio $\in [0.5, 2.0]$, and Latin-script ratio $\geq 0.9$. 9.3M pairs survive (93\% keep rate on the 10M head).
 \item \textbf{v2 (loose, 30M).} The full 40.8M raw corpus, cleaned with identical per-pair filters but without the 10M cap. 30.1M pairs survive (74\% keep rate over all 40.8M; lower because the long tail beyond 10M contains more noisy or misaligned pairs).
 \end{itemize}
-The v1 / v2 split forms the data-quality axis of the 2$\times$2 ablation: identical per-pair filters, different breadth.
+The v1 / v2 split forms the data-quality axis of the 2x2 ablation: identical per-pair filters, different breadth.
 
 \paragraph{WMT14 en-de.} Raw $\sim$~4.5M pairs (Europarl, News Commentary, Common Crawl). The same cleaning thresholds as v1 are applied (default settings of our cleaning script). 4.17M pairs survive (92.6\% keep rate; the en-de raw corpus is cleaner per-pair than en-fr).
 
