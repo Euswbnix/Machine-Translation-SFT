@@ -14,6 +14,13 @@ Trained for 600K steps (4 epochs over 30M); converged best valid 28.66, averaged
 
 This is \textbf{below Base v1.1} on both splits: $-1.29$ valid, $-1.41$ test. Despite seeing $3.2\times$ more data and running $4.9\times$ more optimizer steps, v2 underperforms v1.1 by more than 1 full BLEU.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/base_v2_curves.png}
+\caption{Base v2 training curves (60M parameters, 600K steps, 30M loose-filter en-fr corpus). Loss converges smoothly; BLEU plateaus near 28.5--29 from step 400K onwards, $\sim$~1.4 below Base v1.1's averaged 30.52 baseline despite $4.9\times$ the optimizer steps and $3.2\times$ the data.}
+\label{fig:base_v2_curves}
+\end{figure}
+
 \subsection{Big v2: 209M parameters, 30M loose data}
 \label{sec:big_v2}
 Trained from scratch for 800K planned steps; halted at 416K when valid BLEU plateaued and a single eval dipped below the previous best. Best single-checkpoint valid 27.77; averaging 5 checkpoints in [345K, 416K] gives valid 28.91 / test 33.03. Total wall-clock: $\sim$~9~h to halt.

@@ -11,6 +11,13 @@ Hyperparameters mirror the en-fr Base config (\S\ref{sec:setup}) with two change
 \subsection{Base en-de}
 Base en-de trains for 230K steps ($\sim$~6 epochs at this batch size), best valid 24.25 (single ckpt), 5-checkpoint averaged valid 24.35 / test 24.04 with default beam=5 lp=1.0. The original paper reports tokenized BLEU 27.3 on en-de Base; converting via the ${\sim}1.5$--$2$ tokenized-vs-sacrebleu band, our 24.04 sacrebleu is $\sim$~25.5--26 tokenized BLEU --- 1--1.5 BLEU below the original report. Following the original paper's en-de decoding hyperparameters (beam=4, length-penalty=0.6) does not close this gap (24.19 sacrebleu, +0.15). The gap is small relative to the +0.56 / -0.87 effects we make claims on, and likely reflects differences in BPE tokenization details and training-corpus filtering that we cannot precisely reproduce.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/base_ende_curves.png}
+\caption{Base en-de training curves (60M parameters, 230K steps, 4.17M strict-filter en-de corpus). Validation BLEU climbs monotonically through 24.25 by step 214K and plateaus thereafter. The valid/test gap is narrow (24.35 / 24.04 averaged, $-0.31$) consistent with newstest2013 and newstest2014 being similar-difficulty en-de news distributions.}
+\label{fig:base_ende_curves}
+\end{figure}
+
 \subsection{Big en-de}
 Big en-de trains for 466K steps with dropout 0.3 (original Vaswani's en-de regularization), best single-checkpoint valid 23.41, 5-checkpoint averaged valid 23.01 / test 22.47.
 

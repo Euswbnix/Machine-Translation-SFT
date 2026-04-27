@@ -15,9 +15,23 @@ Trained from scratch for 100K steps under the schedule of \S\ref{sec:setup}; con
 
 The training curve (Figure~\ref{fig:base_v1_curves}) shows the canonical Vaswani shape: Noam ramp to peak $\approx 7\text{e-}4$ at step 4K, then $1/\sqrt{\text{step}}$ decay through 122K. Loss falls smoothly to $\sim$~3.3 with no spike-guard triggers in 122K steps (\S\ref{sec:methodology}).
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/base_v1_curves.png}
+\caption{Base v1.1 training curves (60M parameters, 122K steps, 9.3M strict-filter en-fr corpus). Top-left: training loss; top-right: validation BLEU (newstest2013) climbing monotonically through 30.21; bottom-left: Noam learning-rate schedule with peak $\approx 7\text{e-}4$ at warmup step 4K; bottom-right: loss/BLEU joint view. Zero spike-guard activations across the run.}
+\label{fig:base_v1_curves}
+\end{figure}
+
 \subsection{Big v1.1: 209M parameters, same data}
 \label{sec:big_v1}
 Trained from scratch for 280K steps under the same data, same SPM, same eval pipeline; early-stopped at 260K via patience. Best single-checkpoint valid 30.69. Averaging 5 checkpoints in [210K, 250K] gives valid 31.14 / test 35.87. Total wall-clock: 6~h on the 5090.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/big_v1_curves.png}
+\caption{Big v1.1 training curves (209M parameters, early-stopped at 260K of 280K planned, same 9.3M strict-filter en-fr corpus as Base v1.1). Validation BLEU plateaus around 30.5--30.7 from step 200K onwards; training-loss floor reaches $\sim$~2.3 (vs.\ Base v1.1's $\sim$~3.3). The lower loss floor at greater capacity is the data point exploited in \S\ref{sec:methodology}.}
+\label{fig:big_v1_curves}
+\end{figure}
 
 \subsection{Capacity gap on clean data}
 \label{sec:v1_capacity}
