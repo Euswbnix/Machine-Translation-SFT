@@ -49,7 +49,7 @@ v2 (30M loose)     & \textbf{33.90} & 33.03 & $\mathbf{-0.87}$ \\
 
 Table~\ref{tab:two_by_two} is the central empirical claim of the paper. Two ways to read it:
 \begin{enumerate}
-\item \textbf{Row-wise (capacity gap):} on clean data Big beats Base by $+0.56$; on noisy data Big trails Base by $-0.87$. A single architectural change has opposite effects on opposite-quality data.
+\item \textbf{Row-wise (capacity gap):} on clean data Big beats Base by $+0.56$; on noisy data Big falls below Base by $-0.87$. A single architectural change has opposite effects on opposite-quality data.
 \item \textbf{Column-wise (data-quality drop):} both models lose BLEU on the noisier corpus, but Big loses twice as much ($-2.84$ vs.\ $-1.41$). Capacity does not absorb noise; it amplifies its cost.
 \end{enumerate}
 

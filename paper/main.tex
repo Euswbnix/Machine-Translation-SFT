@@ -3,8 +3,11 @@
 
 \documentclass[11pt,a4paper]{article}
 \usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
+\usepackage{cmap}              % must precede fontenc; fixes PDF text-layer
+                               % so copy/paste and pdftotext preserve spaces
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}           % cleaner glyph-to-Unicode mapping than default CM
 \usepackage{microtype}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
