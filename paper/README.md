@@ -5,15 +5,37 @@ on Overleaf.
 
 ## Build
 
+Two builds share the same section sources:
+
+| File | Use case | Anonymous? | Class |
+|------|---------|-----------|-------|
+| `main.tex`        | arXiv long version, author-on, single-column | no  | `article` |
+| `main_emnlp.tex`  | EMNLP / ACL ARR / WMT submission, double-column | yes | `acl.sty` |
+
 ```bash
 cd paper
-pdflatex main
-bibtex main
-pdflatex main
-pdflatex main
+
+# arXiv build (current default):
+pdflatex main && bibtex main && pdflatex main && pdflatex main
+
+# EMNLP / WMT build (requires acl.sty):
+pdflatex main_emnlp && bibtex main_emnlp && pdflatex main_emnlp && pdflatex main_emnlp
 ```
 
-Or upload the `paper/` directory to Overleaf as a new project.
+**Overleaf path for `main_emnlp`:** create a new project from the
+"ACL Style Files (ARR)" template (built-in on Overleaf), then upload
+`sections/`, `figures/`, `references.bib`, and `main_emnlp.tex`. Set
+`main_emnlp.tex` as the main document. The bundled `acl.sty` will be
+picked up automatically.
+
+## Anonymity
+
+Section files use `\releaseref{public}{anon}` for any identifying
+URL or HF model ID. `main.tex` defines the macro to print the public
+arg; `main_emnlp.tex` defines it to print the anon arg. Do NOT
+hardcode identifying strings in section files; route them through
+`\releaseref` so a single edit at the top of either main file flips
+the whole paper.
 
 ## Layout
 

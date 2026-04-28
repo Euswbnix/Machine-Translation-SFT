@@ -1,7 +1,7 @@
 \section{Experimental Setup}
 \label{sec:setup}
 
-This section documents the single-GPU pipeline used to produce all subsequent results. The pipeline is released in full at \url{https://github.com/Euswbnix/Machine_translation} (pretraining) and \url{https://github.com/Euswbnix/Machine-Translation-SFT} (post-training).
+This section documents the single-GPU pipeline used to produce all subsequent results. The pipeline is released in full at \releaseref{\url{https://github.com/Euswbnix/Machine_translation}}{[pretraining repo URL omitted for review]} and \releaseref{\url{https://github.com/Euswbnix/Machine-Translation-SFT}}{[post-training repo URL omitted for review]}.
 
 \subsection{Hardware and software}
 All training runs use a single NVIDIA RTX 5090 (Blackwell, sm\_120, 32~GB VRAM, 600~W TDP). Software stack: Python 3.10, PyTorch 2.8 nightly (CUDA 12.8 build for sm\_120), SentencePiece 0.1.99, sacrebleu 2.3, and CometKiwi-22 via \texttt{unbabel-comet 2.2}. We train in bf16 throughout (autocast); a brief fp16 attempt on Big diverged and was abandoned.

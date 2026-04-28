@@ -1,0 +1,75 @@
+% EMNLP / ACL Rolling Review / WMT submission build (anonymous, two-column).
+%
+% REQUIREMENTS:
+%   - acl.sty from https://github.com/acl-org/acl-style-files
+%     (drop into this directory). Overleaf has it as a built-in template:
+%     "ACL Style Files (ARR)". Easiest path: New Project -> ACL ARR template,
+%     then upload the section/, figures/, references.bib, and this file.
+%
+% CONVENTIONS:
+%   - Anonymous review version is the default. For camera-ready, swap
+%     \usepackage[review]{acl} to \usepackage{acl}.
+%   - The \releaseref{...}{...} macro prints the SECOND argument (anon
+%     form) in this build; section files use it for repo URLs and
+%     HF model IDs. Keep section files single-source; do NOT hardcode
+%     identifying strings.
+
+\documentclass[11pt]{article}
+
+\usepackage[review]{acl}            % review = anonymous; swap to {acl} for camera-ready
+
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf}
+
+% Anonymous version of the URL/HF-id macro: prints the second arg.
+% (See main.tex for the public-build counterpart, which prints the first.)
+\newcommand{\releaseref}[2]{#2}
+
+% Optional: drop content tagged with \ifshort ... \fi from the 8-page
+% ACL build. This is a placeholder; if the document already fits in 8
+% pages without cuts, leave \shortfalse.
+\newif\ifshort
+\shortfalse
+
+\title{Data Quality and Model Capacity in Transformer MT:\\
+  A Two-by-Two Controlled Ablation}
+
+% acl.sty handles author block via \author{...}; in review mode it
+% auto-blanks. Keep a placeholder so a non-review build (camera-ready)
+% has the right info.
+\author{
+  Anonymous Submission \\
+  \texttt{anon@example.com}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/abstract}
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_setup}
+\input{sections/04_enfr_v1}
+\input{sections/05_enfr_v2}
+\input{sections/06_ende}
+\input{sections/07_sft}
+\input{sections/08_methodology_note}
+\input{sections/09_conclusion}
+
+\bibliography{references}
+
+\end{document}

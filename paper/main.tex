@@ -19,6 +19,12 @@
 \usepackage{caption}
 \captionsetup{font=small, labelfont=bf}
 
+% \releaseref{public}{anon} — prints public form in this (arXiv) build.
+% The EMNLP/WMT anonymous build (paper/main_emnlp.tex) redefines this
+% to print the anon form. Section files use this macro; do not hardcode
+% identifying URLs/repo names in section files.
+\newcommand{\releaseref}[2]{#1}
+
 % Single-column for now (easier to draft). Switch to twocolumn for final.
 % \twocolumn
 
